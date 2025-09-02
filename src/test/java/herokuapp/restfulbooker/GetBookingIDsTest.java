@@ -12,7 +12,7 @@ public class GetBookingIDsTest {
     public void getBookingIDsWIthoutFilterTest(){
         // Get response with booking IDs
         Response response = RestAssured.get("https://restful-booker.herokuapp.com/booking");
-        // response.print();
+        response.prettyPrint();
         // Verify response 200
         Assert.assertEquals(response.statusCode(),200,"Status code should be 200, but it is not.");
         // Verify at least 1 booking id in response
