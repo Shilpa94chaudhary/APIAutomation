@@ -8,12 +8,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.net.StandardSocketOptions;
-
 public class CreateBookingTest {
     @Test
     public void createNewBookingTest(){
-        // Create JSON request body
+
         /*
          *  "firstname" : "Jim", "lastname" : "Brown",
             "totalprice" : 111, "depositpaid" : true,
@@ -23,7 +21,7 @@ public class CreateBookingTest {
             },
             "additionalneeds" : "Breakfast"
          */
-
+        // Create JSON request body
         JSONObject body = new JSONObject();
         JSONObject bookingDates = new JSONObject();
         body.put("firstname","Robert");
@@ -36,9 +34,11 @@ public class CreateBookingTest {
         body.put("additionalneeds","Breakfast");
 
         System.out.println("Request body: " + body);
+
         // Get response
         Response response = RestAssured.given().contentType(ContentType.JSON).
                 body(body.toString()).post("https://restful-booker.herokuapp.com/booking");
+
         response.prettyPrint();
 
         // Save response values in variables
