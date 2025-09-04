@@ -38,7 +38,6 @@ public class CreateBookingTest {
         // Get response
         Response response = RestAssured.given().contentType(ContentType.JSON).
                 body(body.toString()).post("https://restful-booker.herokuapp.com/booking");
-
         response.prettyPrint();
 
         // Save response values in variables
@@ -79,13 +78,15 @@ public class CreateBookingTest {
         softAssert.assertEquals(additionalNeeds, body.get("additionalneeds"),
                 "Additional needs should be " + body.get("additionalneeds") + " but found " + additionalNeeds);
 
-        softAssert.assertAll();
-
         // Verify booking details
         String getBookingDetailURL = "https://restful-booker.herokuapp.com/booking/" +  bookingID;
         System.out.println(getBookingDetailURL);
         Response checkBooking = RestAssured.get(getBookingDetailURL);
         checkBooking.prettyPrint();
+        softAssert.assertEquals(checkBooking.jsonPath().getString("firstname"), body.get("firstname"),
+                "First name mismatch: expected " + body.get("firstname") + " but found " + checkBooking.jsonPath().getString("firstname"));
 
+        // Soft assert will run only if we give this command
+        softAssert.assertAll();
     }
 }
