@@ -1,11 +1,23 @@
 package herokuapp.restfulbooker;
 
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
+import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
+
+    protected RequestSpecification spec;
+
+    // Method to set BaseURL
+    @BeforeMethod
+    public void setUp(){
+        spec = new RequestSpecBuilder().setBaseUri("https://restful-booker.herokuapp.com").build();
+    }
+
     protected Response createBooking(){
         /*
          *  "firstname" : "Jim", "lastname" : "Brown",
@@ -28,7 +40,8 @@ public class BaseTest {
         body.put("bookingdates",bookingDates);
         body.put("additionalneeds","Breakfast");
 
-        System.out.println("Request body: " + body);
+        // If you want to print request body uncomment this line
+//        System.out.println("Request body: " + body);
 
         // Get response
         return RestAssured.given().contentType(ContentType.JSON).
